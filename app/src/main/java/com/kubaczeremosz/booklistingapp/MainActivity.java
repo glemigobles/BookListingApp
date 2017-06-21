@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 setMessage(getString(R.string.nothingfound));
                 return;
             }
+            setMessage(getString(R.string.results));
             updateUI(bookList);
         }
 
@@ -131,9 +132,6 @@ public class MainActivity extends AppCompatActivity {
                     inputStream = urlConnection.getInputStream();
                     jsonResponse = readFromStream(inputStream);
                 }
-                else{
-                    setMessage(getString(R.string.noConnection));
-                }
 
             } catch (IOException e) {
                 // TODO: Handle the exception
@@ -144,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
                 if (inputStream != null) {
                     // function must handle java.io.IOException here
                     inputStream.close();
+                }
+                if (urlConnection == null){
+                    setMessage(getString(R.string.noConnection));
                 }
             }
             return jsonResponse;
