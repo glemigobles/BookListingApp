@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BookListingApp</string>
+    <string name="nothingfound">\"Sorry, nothing found\"</string>
+    <string name="noConnection">\"Sorry, there is no connection to server\"</string>
 </resources>

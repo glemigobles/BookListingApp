@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,24 +29,24 @@ public class MainActivity extends AppCompatActivity {
     /** Tag for the log messages */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    /** URL to query the Books API dataset for book information */
-    private static final String GOOGLE_BOOKS_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2012-01-01&endtime=2012-12-01&minmagnitude=6";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //search for book
-        EditText searchPhrase = (EditText) findViewById(R.id.queryfield);
+        final EditText searchPhrase = (EditText) findViewById(R.id.queryfield);
 
         //search button
         Button findButton = (Button) findViewById(R.id.findButton);
         findButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookAsyncTask task = new BookAsyncTask();
+                String phrase = searchPhrase.getText().toString();
+                phrase = phrase.replaceAll(" ","+");
+                String GOOGLE_BOOKS_REQUEST_URL =
+                        "https://www.googleapis.com/books/v1/volumes?q="+phrase;
+                BookAsyncTask task = new BookAsyncTask(GOOGLE_BOOKS_REQUEST_URL);
                 task.execute();
             }
         });
@@ -62,10 +63,17 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
+    public void setMessage(String message){
+        TextView text = (TextView) findViewById(R.id.messageText);
+        text.setText(message);
+    }
+
     public class BookAsyncTask extends AsyncTask<URL, Void, ArrayList<Book>> {
 
+        String GOOGLE_BOOKS_REQUEST_URL;
 
-        public BookAsyncTask() {
+        public BookAsyncTask(String url) {
+            this.GOOGLE_BOOKS_REQUEST_URL=url;
         }
 
         @Override
@@ -91,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Book> bookList) {
             if (bookList == null) {
+                setMessage(getString(R.string.nothingfound));
                 return;
             }
             updateUI(bookList);
@@ -121,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 if(urlConnection.getResponseCode()==200){
                     inputStream = urlConnection.getInputStream();
                     jsonResponse = readFromStream(inputStream);
+                }
+                else{
+                    setMessage(getString(R.string.noConnection));
                 }
 
             } catch (IOException e) {
@@ -168,12 +180,12 @@ public class MainActivity extends AppCompatActivity {
             try {
 
                 JSONObject root = new JSONObject(jasonResponse);
-                JSONArray features= root.getJSONArray("features");
-                for(int i=0; i<features.length();i++){
-                    JSONObject currentEarthquake=features.getJSONObject(i);
-                    JSONObject properties = currentEarthquake.getJSONObject("properties");
-                    String author = properties.getString("mag");
-                    String title =properties.getString("place");
+                JSONArray items= root.getJSONArray("items");
+                for(int i=0; i<items.length();i++){
+                    JSONObject currentBook=items.getJSONObject(i);
+                    JSONObject properties = currentBook.getJSONObject("volumeInfo");
+                    String author = properties.getString("authors");
+                    String title =properties.getString("title");
                     Book book =new Book(author,title,R.drawable.icon);
                     books.add(book);
                 }
