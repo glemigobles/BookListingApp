@@ -14,8 +14,8 @@
             android:scaleType="centerCrop"/>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:paddingLeft="16dp">
@@ -24,12 +24,15 @@
                 android:id="@+id/list_book_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textColor="@color/colorTitle"/>
 
             <TextView
                 android:id="@+id/list_book_author"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/colorAuthor"/>
 
     </LinearLayout>
 
