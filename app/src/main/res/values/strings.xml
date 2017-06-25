@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">BookListingApp</string>
+    <string name="app_name">Book Finder</string>
     <string name="nothingfound">Sorry, nothing found</string>
     <string name="noConnection">Sorry, there is no connection to server</string>
     <string name="results">Search results:</string>
+    <string name="refresh">Refresh</string>
+    <string name="find">Find Book</string>
 </resources>

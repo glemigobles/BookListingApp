@@ -20,32 +20,47 @@
         tools:layout_editor_absoluteX="8dp"
             android:textSize="20sp"
             android:id="@+id/queryfield"
+            android:hint="type title or author"
         />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Find book"
+            android:gravity="center"
+            android:text="@string/find"
             android:id="@+id/findButton"/>
+        <ProgressBar
+            android:id="@+id/loading_indicator"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:textSize="20sp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:textColor="@color/colorAccent"
             android:id="@+id/messageText"
             />
 
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/list"
         android:orientation="vertical"
         android:layout_width="368dp"
         android:layout_height="495dp"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp" />
+
+
+
 
     </LinearLayout>
 
