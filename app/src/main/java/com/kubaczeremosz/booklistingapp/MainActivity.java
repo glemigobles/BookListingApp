@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        final NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         //search view
         final EditText searchPhrase = (EditText) findViewById(R.id.queryfield);
 
         //search button
         final Button findButton = (Button) findViewById(R.id.findButton);
-        findButton.setText(R.string.find);
+        findButton.setText(R.string.refresh);
 
         //listview
         mAdapter = new BookListAdapter(this, new ArrayList<Book>());
@@ -62,11 +62,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if(networkInfo!=null && networkInfo.isConnected()){
 
+            findButton.setText(R.string.find);
             loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
             findButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(networkInfo.isFailover()){
+
+                    //check connection
+                    ConnectivityManager connMgr = (ConnectivityManager)
+                            getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                    if(networkInfo==null){
+                        mAdapter.clear();
+                        loaderManager.destroyLoader(BOOK_LOADER_ID);
                         recreate();
                     }
                         searchNo++;
@@ -85,10 +93,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             findButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    findButton.setText(R.string.refresh);
                     recreate();
                     loadingIndicator.setVisibility(View.VISIBLE);
-                    String phrase = searchPhrase.getText().toString();
 
                 }
             });
