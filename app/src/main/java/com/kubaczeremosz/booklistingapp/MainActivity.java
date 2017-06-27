@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         phrase = phrase.replaceAll(" ", "+");
                         GOOGLE_BOOKS_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + phrase + "";
                         loaderManager.restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
-
                 }
             });
         }
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mAdapter.addAll(books);
             mText.setText(R.string.results);
         }
-        if (books.isEmpty()){
+        if (books != null && books.isEmpty()){
             mText.setText(R.string.nothingfound);
         }
     }

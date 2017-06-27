@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     tools:context="com.kubaczeremosz.booklistingapp.MainActivity">
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="7dp"
+        >
 
         <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp"
-            android:textSize="20sp"
             android:id="@+id/queryfield"
-            android:hint="type title or author"
-        />
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/hint"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
 
         <Button
+            android:id="@+id/findButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/find"
-            android:id="@+id/findButton"/>
+            android:text="@string/find" />
+
         <ProgressBar
             android:id="@+id/loading_indicator"
             style="@style/Widget.AppCompat.ProgressBar"
@@ -37,31 +38,26 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp" />
 
         <TextView
+            android:id="@+id/messageText"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
             android:layout_margin="10dp"
             android:textColor="@color/colorAccent"
-            android:id="@+id/messageText"
-            />
-
+            android:textSize="18sp" />
 
 
         <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/list"
-        android:orientation="vertical"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp" />
-
-
-
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

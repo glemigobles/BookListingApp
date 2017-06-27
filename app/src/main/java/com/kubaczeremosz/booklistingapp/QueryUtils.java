@@ -1,11 +1,9 @@
 package com.kubaczeremosz.booklistingapp;
 
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,25 +22,29 @@ public class QueryUtils {
         URL url = createUrl(requestUrl);
         String jasonResponse= makeHttpRequest(url);
         ArrayList<Book> books = new ArrayList<>();
+        if(jasonResponse!=null){
+            try {
 
-        try {
+                JSONObject root = new JSONObject(jasonResponse);
+                JSONArray items= root.getJSONArray("items");
+                for(int i=0; i<items.length();i++){
+                    JSONObject currentBook=items.getJSONObject(i);
+                    JSONObject properties = currentBook.getJSONObject("volumeInfo");
+                    //String author = properties.getString("authors");
+                    JSONArray authors = properties.getJSONArray("authors");
+                    String author = authors.getString(0);
+                    String title =properties.getString("title");
+                    Book book =new Book(author,title);
+                    books.add(book);
+                }
 
-            JSONObject root = new JSONObject(jasonResponse);
-            JSONArray items= root.getJSONArray("items");
-            for(int i=0; i<items.length();i++){
-                JSONObject currentBook=items.getJSONObject(i);
-                JSONObject properties = currentBook.getJSONObject("volumeInfo");
-                String author = properties.getString("authors");
-                String title =properties.getString("title");
-                Book book =new Book(author,title);
-                books.add(book);
+            } catch (JSONException e) {
+                Log.e("BookAsyncTask", "Problem parsing the books JSON results", e);
             }
 
-        } catch (JSONException e) {
-            Log.e("BookAsyncTask", "Problem parsing the books JSON results", e);
+            return books;
         }
-
-        return books;
+        return null;
     }
 
     private static URL createUrl(String stringUrl) {

@@ -8,13 +8,10 @@ public class Book {
 
     private String title;
     private String author;
-   // private int imageResourceId;
-
 
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
-        //this.imageResourceId = imageResourceId;
     }
 
     public String getTitle() {
@@ -25,7 +22,5 @@ public class Book {
         return author;
     }
 
-    //public int getImageResourceId() {
-//        return imageResourceId;
-//    }
+
 }

@@ -5,4 +5,5 @@
     <string name="results">Search results:</string>
     <string name="refresh">Refresh</string>
     <string name="find">Find Book</string>
+    <string name="hint">type title or author</string>
 </resources>

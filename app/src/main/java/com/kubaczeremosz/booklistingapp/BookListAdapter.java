@@ -36,9 +36,6 @@ public class BookListAdapter extends ArrayAdapter<Book> {
         TextView offerTextView = (TextView) convertView.findViewById(R.id.list_book_author);
         offerTextView.setText(currentBook.getAuthor());
 
-//        ImageView imageView = (ImageView) convertView.findViewById(R.id.list_book_icon);
-//        imageView.setImageResource(currentBook.getImageResourceId());
-
         ViewGroup item =(ViewGroup) convertView.findViewById(R.id.item);
         return convertView;
     }
