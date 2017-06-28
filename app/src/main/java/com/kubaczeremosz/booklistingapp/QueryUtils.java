@@ -24,22 +24,26 @@ public class QueryUtils {
         ArrayList<Book> books = new ArrayList<>();
         if(jasonResponse!=null){
             try {
-
                 JSONObject root = new JSONObject(jasonResponse);
                 JSONArray items= root.getJSONArray("items");
                 for(int i=0; i<items.length();i++){
                     JSONObject currentBook=items.getJSONObject(i);
                     JSONObject properties = currentBook.getJSONObject("volumeInfo");
-                    //String author = properties.getString("authors");
-                    JSONArray authors = properties.getJSONArray("authors");
-                    String author = authors.getString(0);
+                    String author;
+                    if(properties.has("authors")){
+                        JSONArray authors = properties.getJSONArray("authors");
+                        author = authors.getString(0);
+                    }
+                    else{
+                        author = "Author N/A";
+                    }
                     String title =properties.getString("title");
                     Book book =new Book(author,title);
                     books.add(book);
                 }
 
             } catch (JSONException e) {
-                Log.e("BookAsyncTask", "Problem parsing the books JSON results", e);
+                //Log.e("BookAsyncTask", "Problem parsing the books JSON results", e);
             }
 
             return books;
@@ -48,7 +52,7 @@ public class QueryUtils {
     }
 
     private static URL createUrl(String stringUrl) {
-        URL url = null;
+        URL url;
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException exception) {
