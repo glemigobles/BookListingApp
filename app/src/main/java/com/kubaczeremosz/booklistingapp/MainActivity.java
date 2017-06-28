@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mText = (TextView) findViewById(R.id.messageText);
         mText.setVisibility(View.GONE);
 
+        //loadManager
         final LoaderManager loaderManager = getLoaderManager();
         if(searchNo>0){
             loaderManager.initLoader(BOOK_LOADER_ID, null, MainActivity.this);
@@ -68,15 +69,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
                 if (networkInfo != null && networkInfo.isConnected()) {
-
                     searchNo++;
                     mText.setVisibility(View.GONE);
                     loadingIndicator.setVisibility(View.VISIBLE);
                     String phrase = searchPhrase.getText().toString();
                     phrase = phrase.replaceAll(" ", "+");
-                    GOOGLE_BOOKS_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + phrase + "";
+                    GOOGLE_BOOKS_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=" + phrase;
                     loaderManager.restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
-                } else {
+                }
+                else {
                     mText.setVisibility(View.VISIBLE);
                     mText.setText(R.string.noConnection);
                     mAdapter.clear();
